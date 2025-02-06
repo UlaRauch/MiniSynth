@@ -16,35 +16,21 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun ControlsPanel(
-    modifier: Modifier = Modifier
+fun ControlsPanel() = Row(
+    modifier = Modifier
+        .fillMaxWidth()
+        .fillMaxHeight(),
+    horizontalArrangement = Arrangement.Center,
+    verticalAlignment = Alignment.CenterVertically
 ) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
+    Frequency(
+        modifier = Modifier
+            .fillMaxWidth(0.5f)
             .fillMaxHeight()
-            .border(BorderStroke(5.dp, Color.Black)),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Column(
-            modifier = modifier
-                .fillMaxHeight()
-                .fillMaxWidth(0.7f)
-                .border(BorderStroke(5.dp, Color.Black)),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text("Pitch and play control")
-        }
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .border(BorderStroke(5.dp, Color.Black))
-        ) {
-            Text("Volume control")
-        }
-    }
+    )
+    Volume(
+        modifier = Modifier
+            .fillMaxWidth(0.5f)
+            .fillMaxHeight()
+    )
 }

@@ -18,7 +18,6 @@ import rauch.ula.minisynth.ui.theme.MiniSynthTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         enableEdgeToEdge()
         setContent {
             MiniSynthTheme {

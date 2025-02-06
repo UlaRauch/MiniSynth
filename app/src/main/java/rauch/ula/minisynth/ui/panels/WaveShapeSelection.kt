@@ -20,29 +20,17 @@ import rauch.ula.minisynth.ui.components.WavetableButton
 fun WaveShapeSelection(modifier: Modifier = Modifier) = Row(
     modifier = modifier
         .fillMaxWidth()
-        .fillMaxHeight(0.5f) // TODO: sizes
-        .border(BorderStroke(5.dp, Color.DarkGray)),
+        .fillMaxHeight(0.25f), // TODO: sizes
     horizontalArrangement = Arrangement.SpaceEvenly,
     verticalAlignment = Alignment.CenterVertically
-) {
-        Column(
-            modifier = modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .border(BorderStroke(5.dp, Color.Black)),
-            verticalArrangement = Arrangement.SpaceEvenly,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Row(
-                modifier = modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                for (shape in WaveTableShapes.entries) {
-                    WavetableButton(
-                        modifier = modifier,
-                        onClick = {},
-                        label = shape.toString())
-                }
-            }
-        }
+)
+{
+    for (shape in WaveTableShapes.entries) {
+        WavetableButton(
+            modifier = modifier,
+            onClick = {},
+            label = shape.toString()
+        )
+
+    }
 }
