@@ -1,36 +1,33 @@
-package rauch.ula.minisynth.ui.panels
+package rauch.ula.minisynth.ui.components
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import rauch.ula.minisynth.synth.model.WaveTableShapes
-import rauch.ula.minisynth.ui.components.WavetableButton
+import androidx.compose.ui.res.stringResource
+import rauch.ula.minisynth.synth.model.Wavetable
 
 @Composable
-fun WaveShapeSelection(modifier: Modifier = Modifier) = Row(
+fun WaveShapeSelection(
+    modifier: Modifier = Modifier,
+    onUpdateWavetable: (Wavetable) -> Unit
+) = Row(
     modifier = modifier
         .fillMaxWidth()
         .fillMaxHeight(0.25f), // TODO: sizes
     horizontalArrangement = Arrangement.SpaceEvenly,
     verticalAlignment = Alignment.CenterVertically
-)
-{
-    for (shape in WaveTableShapes.entries) {
+) {
+    for (wavetable in Wavetable.entries) {
         WavetableButton(
             modifier = modifier,
-            onClick = {},
-            label = shape.toString()
+            onClick = {
+                onUpdateWavetable(wavetable)
+            },
+            label = stringResource(wavetable.toResourceString())
         )
-
     }
 }

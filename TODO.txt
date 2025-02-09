@@ -1,15 +1,17 @@
 
 TODO
-* github!
-* Theme - daweil egal
+* Replace LiveData with Flow - WIP
+* Maybe introduce redux
+
+* split viewmodel into separate viewmodels
 
 * C++ - möglichst bald dorthin!
-* funktionalität erweitern!
 
-
-* UI - redesign
+* UI/UX - redesign + fix it!
 - replace text with symbols: waveshapes, play, better volume icons
+- mark selected wavetable
 
-* waveshape per schieber continuierlich anpassbar
+* settings nach appschließen speichern, "patch speichern"
+* waveshape per schieber kontinuierlich anpassbar
 * lfo - mehr davon
 * bluetooth

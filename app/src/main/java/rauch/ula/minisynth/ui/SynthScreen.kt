@@ -5,14 +5,22 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import rauch.ula.minisynth.synth.viewmodel.SynthViewModel
+import rauch.ula.minisynth.ui.components.WaveShapeSelection
 import rauch.ula.minisynth.ui.panels.ControlsPanel
-import rauch.ula.minisynth.ui.panels.WaveShapeSelection
 
 @Composable
-fun SynthScreen() = Surface(modifier = Modifier.fillMaxSize()) {
+fun SynthScreen(viewModel: SynthViewModel) = Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+    val synthUiState by viewModel.uiState.collectAsState()
+
     Column {
-        WaveShapeSelection()
-        ControlsPanel()
+        WaveShapeSelection(onUpdateWavetable = viewModel::updateWaveTable)
+        ControlsPanel(
+            frequencyUiState = synthUiState.frequencyControlUiState,
+            onUpdateFrequency = viewModel::onFrequencyChange
+        )
     }
 }

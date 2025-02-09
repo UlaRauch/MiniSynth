@@ -1,4 +1,4 @@
-package rauch.ula.minisynth.ui.panels
+package rauch.ula.minisynth.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
