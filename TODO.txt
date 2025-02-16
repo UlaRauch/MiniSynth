@@ -15,3 +15,6 @@ TODO
 * waveshape per schieber kontinuierlich anpassbar
 * lfo - mehr davon
 * bluetooth
+
+conventions:
+* companion object oben
