@@ -14,28 +14,30 @@ fun VerticalSlider(
     modifier: Modifier = Modifier,
     value: Float,
     valueRange: ClosedFloatingPointRange<Float>,
-    onValueChange: (Float) -> Unit
+    onValueChange: (Float) -> Unit,
 ) {
     Slider(
-        modifier = modifier.graphicsLayer {
-            rotationZ = 270f
-            transformOrigin = TransformOrigin(0f, 0f)
-        }
-            .layout { measurable, constraints ->
-                val placeable = measurable.measure(
-                    Constraints(
-                        minWidth = constraints.minHeight,
-                        maxWidth = constraints.maxHeight,
-                        minHeight = constraints.minWidth,
-                        maxHeight = constraints.maxWidth
-                    )
-                )
-                layout(placeable.height, placeable.width) {
-                    placeable.place(-placeable.width, 0)
-                }
-            },
+        modifier =
+            modifier
+                .graphicsLayer {
+                    rotationZ = 270f
+                    transformOrigin = TransformOrigin(0f, 0f)
+                }.layout { measurable, constraints ->
+                    val placeable =
+                        measurable.measure(
+                            Constraints(
+                                minWidth = constraints.minHeight,
+                                maxWidth = constraints.maxHeight,
+                                minHeight = constraints.minWidth,
+                                maxHeight = constraints.maxWidth,
+                            ),
+                        )
+                    layout(placeable.height, placeable.width) {
+                        placeable.place(-placeable.width, 0)
+                    }
+                },
         value = value,
         onValueChange = onValueChange,
-        valueRange = valueRange
+        valueRange = valueRange,
     )
 }

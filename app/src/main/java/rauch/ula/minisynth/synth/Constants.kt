@@ -7,5 +7,5 @@ object Constants {
 
     const val MIN_VOLUME = -60F
     const val MAX_VOLUME = 0F
-    const val DEF_VOLUME = -30F
+    const val DEF_VOLUME = -24F
 }

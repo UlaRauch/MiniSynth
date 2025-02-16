@@ -8,37 +8,38 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import rauch.ula.minisynth.synth.viewmodel.FrequencyControlUiState
+import rauch.ula.minisynth.synth.viewmodel.VolumeControlUiState
 import rauch.ula.minisynth.ui.components.Frequency
 import rauch.ula.minisynth.ui.components.Volume
 
-
 @Composable
 fun ControlsPanel(
-    frequencyUiState: FrequencyControlUiState,
-    onUpdateFrequency: (sliderPosition: Float) -> Unit
+    frequencyControlUiState: FrequencyControlUiState,
+    volumeControlUiState: VolumeControlUiState,
+    onUpdateFrequency: (sliderPosition: Float) -> Unit,
+    onUpdateVolume: (volume: Float) -> Unit,
 ) = Row(
-    modifier = Modifier
-        .fillMaxWidth()
-        .fillMaxHeight(),
-    horizontalArrangement = Arrangement.Center,
-    verticalAlignment = Alignment.CenterVertically
-) {
-    // TODO: nur test
-//    Column {
-//        Text(frequency.toString())
-//        Button(onClick = onButtonClick) { Text(name) }
-//    }
-
-    Frequency(
-        modifier = Modifier
-            .fillMaxWidth(0.5f)
+    modifier =
+        Modifier
+            .fillMaxWidth()
             .fillMaxHeight(),
-        uiState = frequencyUiState,
-        onValueChange = onUpdateFrequency
+    horizontalArrangement = Arrangement.SpaceAround,
+    verticalAlignment = Alignment.CenterVertically,
+) {
+    Frequency(
+        modifier =
+            Modifier
+                .fillMaxWidth(0.3f)
+                .fillMaxHeight(),
+        uiState = frequencyControlUiState,
+        onValueChange = onUpdateFrequency,
     )
     Volume(
-        modifier = Modifier
-            .fillMaxWidth(0.5f)
-            .fillMaxHeight()
+        modifier =
+            Modifier
+                .fillMaxWidth(0.3f)
+                .fillMaxHeight(),
+        uiState = volumeControlUiState,
+        onValueChange = onUpdateVolume,
     )
 }

@@ -10,7 +10,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import rauch.ula.minisynth.synth.viewmodel.FrequencyControlUiState
 
@@ -18,48 +17,42 @@ import rauch.ula.minisynth.synth.viewmodel.FrequencyControlUiState
 fun Frequency(
     modifier: Modifier = Modifier,
     uiState: FrequencyControlUiState,
-    onValueChange: (Float) -> Unit
+    onValueChange: (Float) -> Unit,
 ) {
-    val sliderPosition = rememberSaveable { mutableFloatStateOf(uiState.thumbPosition) } // TODO: take value from viewItem instead
+    val thumbPosition = rememberSaveable { mutableFloatStateOf(uiState.thumbPosition) }
 
     FrequencyControlContent(
         modifier = modifier,
-        value = sliderPosition.floatValue,
+        uiState = uiState,
+        value = thumbPosition.floatValue,
         onValueChange = {
-            sliderPosition.floatValue = it
+            thumbPosition.floatValue = it
             onValueChange(it)
         },
-        valueRange = 0F..1F,
-        frequencyValueLabel = String.format(
-            stringResource(uiState.labelStringResourceId),
-            uiState.frequency
-        )
     )
 }
 
 @Composable
 private fun FrequencyControlContent(
     modifier: Modifier,
+    uiState: FrequencyControlUiState,
     value: Float,
     onValueChange: (Float) -> Unit,
-    valueRange: ClosedFloatingPointRange<Float>,
-    frequencyValueLabel: String
 ) {
     // TODO: move up to use in other composables
     val screenHeight = LocalConfiguration.current.screenHeightDp
     val padding = screenHeight / 20
 
     Column(
-        modifier = modifier.padding(vertical = padding.dp, horizontal = (padding/2).dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(padding.dp)
+        verticalArrangement = Arrangement.spacedBy(padding.dp),
     ) {
-        Text(frequencyValueLabel)
+        Text(uiState.label)
         VerticalSlider(
-            modifier,
+            modifier = modifier.padding(vertical = padding.dp, horizontal = (padding / 2).dp),
             value = value,
-            valueRange = valueRange,
-            onValueChange = onValueChange
+            valueRange = uiState.sliderRange,
+            onValueChange = onValueChange,
         )
     }
 }

@@ -1,11 +1,10 @@
 package rauch.ula.minisynth.synth
 
 import android.util.Log
-import rauch.ula.minisynth.synth.model.Wavetable
+import rauch.ula.minisynth.synth.model.WavetableShape
 import rauch.ula.minisynth.synth.model.WavetableSynthesizer
 
 class LoggingWavetableSynthesizer : WavetableSynthesizer {
-
     private var isPlaying = false
 
     override suspend fun play() {
@@ -18,9 +17,7 @@ class LoggingWavetableSynthesizer : WavetableSynthesizer {
         isPlaying = false
     }
 
-    override suspend fun isPlaying(): Boolean {
-        return isPlaying
-    }
+    override suspend fun isPlaying(): Boolean = isPlaying
 
     override suspend fun setFrequency(frequencyInHz: Float) {
         Log.d("LoggingWavetableSynthesizer", "Frequency set to $frequencyInHz Hz.")
@@ -30,7 +27,7 @@ class LoggingWavetableSynthesizer : WavetableSynthesizer {
         Log.d("LoggingWavetableSynthesizer", "Volume set to $volumeInDb dB.")
     }
 
-    override suspend fun setWavetable(wavetable: Wavetable) {
+    override suspend fun setWavetable(wavetable: WavetableShape) {
         Log.d("LoggingWavetableSynthesizer", "Wavetable set to $wavetable")
     }
 }

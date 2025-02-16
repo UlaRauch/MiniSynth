@@ -2,69 +2,52 @@ package rauch.ula.minisynth.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.rounded.Clear
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Slider
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import rauch.ula.minisynth.synth.Constants
+import rauch.ula.minisynth.synth.viewmodel.VolumeControlUiState
 
 @Composable
-fun Volume(modifier: Modifier = Modifier) {
-    val min = Constants.MIN_VOLUME
-    val max = Constants.MAX_VOLUME
-    val default = Constants.DEF_VOLUME
-
-    val volume = rememberSaveable { mutableStateOf(default) }
+fun Volume(
+    modifier: Modifier = Modifier,
+    uiState: VolumeControlUiState,
+    onValueChange: (Float) -> Unit,
+) {
+    val volume = rememberSaveable { mutableStateOf(uiState.volume) }
 
     VolumeControlContent(
         modifier = modifier,
-        volume = volume.value,
-        volumeRange = min .. max,
-        onValueChange = { volume.value = it })
+        uiState = uiState,
+        onValueChange = onValueChange,
+    )
 }
 
 @Composable
 private fun VolumeControlContent(
     modifier: Modifier,
-    volume: Float,
-    volumeRange: ClosedFloatingPointRange<Float>,
-    onValueChange: (Float) -> Unit
+    uiState: VolumeControlUiState,
+    onValueChange: (Float) -> Unit,
 ) {
-    // The volume slider should take around 1/4 of the screen height
+    // TODO: move up to use in other composables
     val screenHeight = LocalConfiguration.current.screenHeightDp
-    val sliderHeight = screenHeight / 4
+    val padding = screenHeight / 20
 
-    Icon(imageVector = Icons.Default.Add, contentDescription = null)
     Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .fillMaxHeight(0.8f)
-            .offset(y = 40.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween
-    )
-    {
-        Slider(
-            value = volume,
+        verticalArrangement = Arrangement.spacedBy(padding.dp),
+    ) {
+        Text(uiState.label)
+        VerticalSlider(
+            modifier = modifier.padding(vertical = padding.dp, horizontal = (padding / 2).dp),
+            value = uiState.volume,
+            valueRange = uiState.sliderRange,
             onValueChange = onValueChange,
-            modifier = modifier
-                .width(sliderHeight.dp)
-                .rotate(270f),
-            valueRange = volumeRange
         )
     }
-    Icon(imageVector = Icons.Rounded.Clear, contentDescription = null)
 }

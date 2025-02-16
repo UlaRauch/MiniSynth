@@ -4,20 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import rauch.ula.minisynth.synth.Constants
-import rauch.ula.minisynth.synth.model.Wavetable
+import rauch.ula.minisynth.synth.model.WavetableShape
 import rauch.ula.minisynth.synth.model.WavetableSynthesizer
 import kotlin.math.exp
 import kotlin.math.ln
 
-
 class WavetableSynthesizerViewModel : ViewModel() {
     private var defaultFrequency = Constants.DEF_FREQUENCY
     private val frequencyRange = 40f..3000f
-
 
     var wavetableSynthesizer: WavetableSynthesizer? = null
         set(value) {
@@ -38,7 +34,7 @@ class WavetableSynthesizerViewModel : ViewModel() {
         }
     val volumeRange = (-60f)..0f
 
-    private var wavetable = Wavetable.SINE
+    private var wavetable = WavetableShape.SINE
 
     /**
      * @param frequencySliderPosition slider position in [0, 1] range
@@ -60,7 +56,6 @@ class WavetableSynthesizerViewModel : ViewModel() {
         }
     }
 
-
     fun setVolume(volumeInDb: Float) {
         _volume.value = volumeInDb
         viewModelScope.launch {
@@ -68,7 +63,7 @@ class WavetableSynthesizerViewModel : ViewModel() {
         }
     }
 
-    fun setWavetable(newWavetable: Wavetable) {
+    fun setWavetable(newWavetable: WavetableShape) {
         wavetable = newWavetable
         viewModelScope.launch {
             wavetableSynthesizer?.setWavetable(newWavetable)
@@ -84,7 +79,7 @@ class WavetableSynthesizerViewModel : ViewModel() {
                 wavetableSynthesizer?.play()
             }
             // Only when the synthesizer changed its state, update the button label.
-            //updatePlayButtonLabel()
+            // updatePlayButtonLabel()
         }
     }
 
@@ -99,11 +94,10 @@ class WavetableSynthesizerViewModel : ViewModel() {
     }
 
     companion object LinearToExponentialConverter {
-
         private const val MINIMUM_VALUE = 0.001f
+
         fun linearToExponential(value: Float): Float {
             assert(value in 0f..1f)
-
 
             if (value < MINIMUM_VALUE) {
                 return 0f
@@ -112,19 +106,23 @@ class WavetableSynthesizerViewModel : ViewModel() {
             return exp(ln(MINIMUM_VALUE) - ln(MINIMUM_VALUE) * value)
         }
 
-        fun valueFromRangePosition(range: ClosedFloatingPointRange<Float>, rangePosition: Float): Float {
+        fun valueFromRangePosition(
+            range: ClosedFloatingPointRange<Float>,
+            rangePosition: Float,
+        ): Float {
             assert(rangePosition in 0f..1f)
 
             return range.start + (range.endInclusive - range.start) * rangePosition
         }
 
-
-        fun rangePositionFromValue(range: ClosedFloatingPointRange<Float>, value: Float): Float {
+        fun rangePositionFromValue(
+            range: ClosedFloatingPointRange<Float>,
+            value: Float,
+        ): Float {
             assert(value in range)
 
             return (value - range.start) / (range.endInclusive - range.start)
         }
-
 
         fun exponentialToLinear(rangePosition: Float): Float {
             assert(rangePosition in 0f..1f)
@@ -137,11 +135,10 @@ class WavetableSynthesizerViewModel : ViewModel() {
         }
     }
 
-
     fun applyParameters() {
         viewModelScope.launch {
             wavetableSynthesizer?.setFrequency(frequency.value!!)
-            //wavetableSynthesizer?.setVolume(volume.value!!)
+            // wavetableSynthesizer?.setVolume(volume.value!!)
             wavetableSynthesizer?.setWavetable(wavetable)
         }
     }
