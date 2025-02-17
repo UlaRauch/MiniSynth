@@ -1,16 +1,30 @@
 #include "Log.h"
 #include "WavetableSynthesizer.h"
-#include "include/WavetableSynthesizer.h"
+#include "WavetableSynthesizer.h"
+#include "OboeAudioPlayer.h"
+#include "WavetableOscillator.h"
 
 namespace minisynth {
-    bool WavetableSynthesizer::isPlaying() {
+    WavetableSynthesizer::WavetableSynthesizer()
+        : _oscillator{std::make_shared<A4Oscillator>(samplingRate)},
+            _audioPlayer{std::make_unique<OboeAudioPlayer>(_oscillator, samplingRate)} {}
+
+    WavetableSynthesizer::~WavetableSynthesizer() = default;
+
+    bool WavetableSynthesizer::isPlaying() const {
         LOGD("isPlaying() called.");
         return _isPlaying;
     }
 
     void WavetableSynthesizer::play() {
         LOGD("play() called.");
-        _isPlaying = true;
+
+        const auto result = _audioPlayer->play();
+        if (result == 0) {
+            _isPlaying = true;
+        } else {
+            LOGD("Could not start playblack.");
+        }
     }
 
     void WavetableSynthesizer::setFrequency(float frequencyInHz) {
@@ -27,6 +41,8 @@ namespace minisynth {
 
     void WavetableSynthesizer::stop() {
         LOGD("stop() called.");
+
+        _audioPlayer->stop();
         _isPlaying = false;
     }
 }

@@ -9,10 +9,6 @@ import kotlinx.coroutines.launch
 import rauch.ula.minisynth.synth.Constants
 import rauch.ula.minisynth.synth.model.WavetableShape
 import rauch.ula.minisynth.synth.model.WavetableSynthesizer
-import rauch.ula.minisynth.synth.viewmodel.WavetableSynthesizerViewModel.LinearToExponentialConverter.exponentialToLinear
-import rauch.ula.minisynth.synth.viewmodel.WavetableSynthesizerViewModel.LinearToExponentialConverter.linearToExponential
-import rauch.ula.minisynth.synth.viewmodel.WavetableSynthesizerViewModel.LinearToExponentialConverter.rangePositionFromValue
-import rauch.ula.minisynth.synth.viewmodel.WavetableSynthesizerViewModel.LinearToExponentialConverter.valueFromRangePosition
 import kotlin.math.exp
 import kotlin.math.ln
 
@@ -28,7 +24,7 @@ class SynthViewModel : ViewModel() {
     private var _volume = MutableStateFlow(defaultVolume)
     val volume = _volume.asStateFlow()
 
-    private var wavetable = WavetableShape.SINE
+    private var defaultWavetable = WavetableShape.SINE
 
     var synthesizer: WavetableSynthesizer? = null
         set(value) {
@@ -43,7 +39,7 @@ class SynthViewModel : ViewModel() {
         _uiState.value =
             SynthUiState.create(
                 isPlaying = false,
-                selectedShape = WavetableShape.SINE,
+                selectedShape = defaultWavetable,
                 frequency = defaultFrequency,
                 frequencyThumbPosition = sliderPositionFromFrequencyInHz(defaultFrequency),
                 volume = defaultVolume,
@@ -56,8 +52,9 @@ class SynthViewModel : ViewModel() {
 
     fun applyParameters() {
         viewModelScope.launch {
-            synthesizer?.setFrequency(uiState.value.frequencyControlUiState.frequency)
-            synthesizer?.setWavetable(wavetable)
+            synthesizer?.setWavetable(defaultWavetable)
+            synthesizer?.setVolume(defaultVolume)
+            synthesizer?.setFrequency(defaultFrequency)
         }
     }
 
@@ -73,15 +70,13 @@ class SynthViewModel : ViewModel() {
             it.copy(wavetableSelectionUIState = WavetableSelectionUIState.create(newWaveTable))
         }
         viewModelScope.launch {
-            synthesizer?.setWavetable(wavetable)
+            synthesizer?.setWavetable(newWaveTable)
         }
     }
 
     fun onVolumeChange(volume: Float) {
         _uiState.update {
-            it.copy(
-                volumeControlUiState = VolumeControlUiState.create(volume),
-            )
+            it.copy(volumeControlUiState = VolumeControlUiState.create(volume))
         }
         viewModelScope.launch {
             synthesizer?.setVolume(volume)
@@ -93,11 +88,10 @@ class SynthViewModel : ViewModel() {
 
         _uiState.update {
             it.copy(
-                frequencyControlUiState =
-                    FrequencyControlUiState.create(
-                        frequency = frequencyInHz,
-                        thumbPosition = thumbPosition,
-                    ),
+                frequencyControlUiState = FrequencyControlUiState.create(
+                    frequency = frequencyInHz,
+                    thumbPosition = thumbPosition,
+                ),
             )
         }
         viewModelScope.launch {

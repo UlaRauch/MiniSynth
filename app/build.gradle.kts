@@ -19,6 +19,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
+                arguments("-DANDROID_STL=c++_shared")
                 cppFlags += "-std=c++2a"
             }
         }
@@ -42,6 +43,7 @@ android {
     }
     buildFeatures {
         compose = true
+        prefab = true
     }
     externalNativeBuild {
         cmake {
@@ -69,5 +71,5 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation(libs.androidx.livedata)
+    implementation(libs.oboe)
 }

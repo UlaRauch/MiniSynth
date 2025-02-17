@@ -1,6 +1,11 @@
 #pragma once
 
+#include <memory>
+
 namespace minisynth {
+    class AudioSource;
+    class AudioPlayer;
+
     enum class WavetableShape {
         SINE,
         TRIANGLE,
@@ -8,11 +13,17 @@ namespace minisynth {
         SAW,
     };
 
+    constexpr auto samplingRate = 48000;
+
     class WavetableSynthesizer {
     public:
+        WavetableSynthesizer();
+
+        ~WavetableSynthesizer();
+
         void play();
         void stop();
-        bool isPlaying();
+        bool isPlaying() const;
         void setFrequency(float frequencyInHz);
         void setVolume(float VolumeInDb);
         void setWavetable(WavetableShape wavetableShape);
@@ -20,5 +31,7 @@ namespace minisynth {
 
     private:
         bool _isPlaying = false;
+        std::shared_ptr<AudioSource> _oscillator;
+        std::unique_ptr<AudioPlayer> _audioPlayer;
     };
 }
