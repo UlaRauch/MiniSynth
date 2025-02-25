@@ -8,10 +8,10 @@ Goals
 
 So far, the c++ part is taken unaltered (or not significantly) from wolfsound
 
-Changes made so far in the kotlin part:
+Changes to the original version made so far (in the kotlin part):
 
 - replaced LiveData with StateFlow
-- extracted ui state to data classes
+- extracted ui state from living directly in the viewmodel to data classes
 - changed ui design
   - vertical controllers
   - mark selected wavetable
