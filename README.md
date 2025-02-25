@@ -1,5 +1,6 @@
 # MiniSynth App
 WORK IN PROGRESS
+
 Starting Point is this tutorial: https://thewolfsound.com/android-synthesizer-2-graphical-user-interface-with-compose/
 
 Goals
