@@ -1,11 +1,17 @@
 # MiniSynth App
-Starting Point is this Tutorial: https://thewolfsound.com/android-synthesizer-2-graphical-user-interface-with-compose/
+WORK IN PROGRESS
+Starting Point is this tutorial: https://thewolfsound.com/android-synthesizer-2-graphical-user-interface-with-compose/
+
+Goals
+  - create one or several simple instrument(s)
+  - practice C++ by understanding the code and later altering functionality
 
 So far, the c++ part is taken unaltered (or not significantly) from wolfsound
 
-Changes made:
+Changes made so far in the kotlin part:
 
-- LiveData is replaced with StateFlow
-- ui state is extracted to data classes
-- ui design is changed
+- replaced LiveData with StateFlow
+- extracted ui state to data classes
+- changed ui design
+  - vertical controllers
   - mark selected wavetable
