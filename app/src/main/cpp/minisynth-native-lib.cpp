@@ -2,6 +2,7 @@
 #include <memory>
 #include "Log.h"
 #include "WavetableSynthesizer.h"
+#include "WavetableShape.h"
 
 
 extern "C" {

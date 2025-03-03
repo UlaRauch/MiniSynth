@@ -1,4 +1,4 @@
-package rauch.ula.minisynth.ui.components
+package rauch.ula.minisynth.ui.panels
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import rauch.ula.minisynth.synth.model.WavetableShape
 import rauch.ula.minisynth.synth.viewmodel.WavetableSelectionUIState
+import rauch.ula.minisynth.ui.components.WavetableButton
 
 @Composable
 fun WaveShapeSelection(

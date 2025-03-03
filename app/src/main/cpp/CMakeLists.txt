@@ -30,6 +30,7 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
         minisynth-native-lib.cpp
         WavetableSynthesizer.cpp
         WavetableOscillator.cpp
+        WavetableFactory.cpp
         OboeAudioPlayer.cpp
 )
 

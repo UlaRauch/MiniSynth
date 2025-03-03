@@ -13,32 +13,29 @@ import rauch.ula.minisynth.ui.components.Frequency
 import rauch.ula.minisynth.ui.components.Volume
 
 @Composable
-fun ControlsPanel(
+fun Controls(
     frequencyControlUiState: FrequencyControlUiState,
     volumeControlUiState: VolumeControlUiState,
     onUpdateFrequency: (sliderPosition: Float) -> Unit,
     onUpdateVolume: (volume: Float) -> Unit,
 ) = Row(
-    modifier =
-        Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(),
+    modifier = Modifier
+        .fillMaxWidth()
+        .fillMaxHeight(),
     horizontalArrangement = Arrangement.SpaceAround,
     verticalAlignment = Alignment.CenterVertically,
 ) {
     Frequency(
-        modifier =
-            Modifier
-                .fillMaxWidth(0.3f)
-                .fillMaxHeight(),
+        modifier = Modifier
+            .fillMaxWidth(0.3f)
+            .fillMaxHeight(),
         uiState = frequencyControlUiState,
         onValueChange = onUpdateFrequency,
     )
     Volume(
-        modifier =
-            Modifier
-                .fillMaxWidth(0.3f)
-                .fillMaxHeight(),
+        modifier = Modifier
+            .fillMaxWidth(0.3f)
+            .fillMaxHeight(),
         uiState = volumeControlUiState,
         onValueChange = onUpdateVolume,
     )

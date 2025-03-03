@@ -15,8 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import rauch.ula.minisynth.synth.viewmodel.SynthViewModel
 import rauch.ula.minisynth.ui.components.PlayButton
-import rauch.ula.minisynth.ui.components.WaveShapeSelection
-import rauch.ula.minisynth.ui.panels.ControlsPanel
+import rauch.ula.minisynth.ui.panels.WaveShapeSelection
+import rauch.ula.minisynth.ui.panels.Controls
 
 @Composable
 fun SynthScreen(viewModel: SynthViewModel) =
@@ -39,7 +39,7 @@ fun SynthScreen(viewModel: SynthViewModel) =
                 uiState = synthUiState.playButtonUiState,
                 onClick = viewModel::togglePlay,
             )
-            ControlsPanel(
+            Controls(
                 frequencyControlUiState = synthUiState.frequencyControlUiState,
                 volumeControlUiState = synthUiState.volumeControlUiState,
                 onUpdateFrequency = viewModel::onFrequencyChange,
